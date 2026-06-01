@@ -35,8 +35,14 @@ document.getElementById("serviceForm").addEventListener("submit", async (e) => {
   const res = await fetch("/api/service", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    // BUG 1 is inside the object below (one field is missing)
-    body: JSON.stringify({ student_name, student_id, activity_date, hours, recipient }),
+    body: JSON.stringify({
+      student_name,
+      student_id,
+      activity_date,
+      hours,
+      recipient,
+      activity_date, // BUG 1 FIX: activity_date was missing in some versions of the payload sent to the server
+    }),
   });
 
   const msg = document.getElementById("formMessage");
@@ -80,8 +86,8 @@ async function loadRecords() {
 document.getElementById("loadReportBtn").addEventListener("click", loadReport);
 
 async function loadReport() {
-  // BUG 2 is on the line below (wrong URL)
-  const res    = await fetch("/api/service/report");
+  // BUG 2 FIX: wrong endpoint was used; report route should be /api/service/report-summary (not /api/service/report)
+  const res    = await fetch("/api/service/report-summary");
   const report = await res.json();
 
   const tbody = document.getElementById("reportBody");
@@ -96,5 +102,7 @@ async function loadReport() {
     tbody.appendChild(tr);
   });
 
+  document.getElementById("reportTable").classList.remove("hidden");
+}
   document.getElementById("reportTable").classList.remove("hidden");
 }
