@@ -16,8 +16,7 @@ CREATE TABLE IF NOT EXISTS service_records (
   -- and does NOT allow null values.
   -- Hint: look at how the other columns above are written.
   -- YOUR CODE HERE:
-
-  hours NUMERIC(5,2) NOT NULL,
-  recipient    TEXT NOT NULL,
-  created_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  hours         NUMERIC(5,2) NOT NULL,
+  recipient     TEXT NOT NULL,
+  created_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
